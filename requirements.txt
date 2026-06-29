@@ -1,0 +1,14 @@
+numpy==1.24.3
+pandas==2.0.2
+scikit-learn==1.2.2
+matplotlib==3.7.1
+tqdm==4.65.0
+
+torch==2.0.1
+transformers==4.40.2
+sentence-transformers==3.0.0
+datasets==2.14.5
+accelerate==0.27.2
+
+faiss-gpu==1.7.2
+wandb==0.16.3
