@@ -1,5 +1,57 @@
 # M-PreSS
-code base for paper "M-PreSS: Model Pre-training Approach for Study Screening in Systematic Review"
+code base for paper "M-PreSS: Model Pre-training Approach for Study Screening in Systematic Reviews"
+
+## Installation
+
+```bash
+conda create -n mpress python=3.8.16
+conda activate mpress
+pip install -r requirements.txt
+```
+
+## Data format
+
+The scripts expect CSV files under a data directory, usually `./data/`.
+
+Typical files are:
+
+```text
+data/
+├── train.csv
+├── test.csv
+├── val.csv
+└── criteria.csv
+```
+
+The main training and evaluation CSV files should contain at least the following columns:
+
+| Column | Description |
+|---|---|
+| `query` | Systematic review topic/question |
+| `title` | Candidate study title |
+| `abstract` | Candidate study abstract |
+| `label_included` | Binary label: `1` for included/relevant, `0` for excluded/not relevant |
+
+The criteria file should contain:
+
+| Column | Description |
+|---|---|
+| `topic` | Topic name matching the `query` values |
+| `criteria` | Eligibility criteria text for that topic |
+
+Each study is converted into text like:
+
+```text
+Title: <title>. Abstract: <abstract>
+```
+
+Each query is usually converted into text like:
+
+```text
+Query: <topic>. Criteria: <criteria>
+```
+
+## Citation
 
 If you find this repository useful, please cite:
 ```
