@@ -51,6 +51,57 @@ Each query is usually converted into text like:
 Query: <topic>. Criteria: <criteria>
 ```
 
+## Run the code
+
+Run all commands from the repository root.
+
+### 1. Train the general model
+
+```bash
+export WANDB_PROJECT=mpress
+export WANDB_RUN_NAME=general_model
+export MPRESS_TRAINED_MODEL_PATH=./model/general_model/
+python training_general_model.py
+```
+
+### 2. Train leave-one-out models
+
+This script reads `SLURM_ARRAY_TASK_ID` to choose which topic to leave out.
+
+```bash
+export WANDB_PROJECT=mpress
+export MPRESS_LOO_SAVE_ROOT=./model/loo/
+export SLURM_ARRAY_TASK_ID=0
+python leave_one_out_training.py
+```
+
+### 3. Evaluate leave-one-out models
+
+```bash
+export MPRESS_LOO_MODEL_PATH=./model/loo/
+export MPRESS_LOO_FIG_PATH=./model/figures/
+export MPRESS_LOO_PREDICTION_PATH=./model/predictions/
+python leave_one_out_evaluation.py
+```
+
+### 4. Retrieve studies with trained models
+
+Set one or more model paths as a comma-separated list.
+
+```bash
+export MPRESS_DATA_PATH=./data/
+export MPRESS_MODEL_PATHS=./model/general_model/
+export MPRESS_PREDICTION_PATH=./model/predictions/
+python retrieve_study.py
+```
+
+If you have multiple models:
+
+```bash
+export MPRESS_MODEL_PATHS=./model/model_a/,./model/model_b/
+python retrieve_study.py
+```
+
 ## Citation
 
 If you find this repository useful, please cite:
