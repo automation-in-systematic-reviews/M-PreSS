@@ -10,7 +10,7 @@ import wandb
 seed = 42
 torch.manual_seed(seed)
 torch.cuda.manual_seed_all(seed)
-os.environ["WANDB_PROJECT"] = "<WANDB_PROJECT_NAME>"
+os.environ["WANDB_PROJECT"] = os.getenv("WANDB_PROJECT", "mpress")
 
 model_path = 'bionlp/bluebert_pubmed_mimic_uncased_L-12_H-768_A-12' # BlueBERT
 model = SentenceTransformer(model_path)
@@ -29,8 +29,8 @@ margin = 0.5
 dataset_path = './data/'
 criteria_file = 'new_criteria.csv'
 
-model_save_path = '<PATH_TO_TRAINED_MODEL>'
-wandb_run_name = '<WANDB_RUN_NAME>'
+model_save_path = os.getenv('MPRESS_TRAINED_MODEL_PATH', './model/general_model/')
+wandb_run_name = os.getenv('WANDB_RUN_NAME', 'general_model')
 print(model_save_path)
 os.makedirs(model_save_path, exist_ok=True)
 

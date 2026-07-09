@@ -9,10 +9,10 @@ torch.cuda.manual_seed_all(seed)
 
 hyperparam={'top_k':None,
             'max_length':512,
-            'models':['<PATH_TO_TRAINED_MODEL>'],
-            'data_path':'<PATH_TO_DATA>',
+            'models':[m for m in os.getenv('MPRESS_MODEL_PATHS', '').split(',') if m],
+            'data_path':os.getenv('MPRESS_DATA_PATH', './data/'),
             'index_path':None,
-            'prediction_path':'<PATH_TO_PREDICTION_RESULTS>', 
+            'prediction_path':os.getenv('MPRESS_PREDICTION_PATH', './model/predictions/'),
             'fig_path':None, # add a path to save the figures
             'criteria':True, # True to add criteria in the systematic review topic inputs
             'summary':True}
@@ -96,7 +96,7 @@ for i, query in enumerate(topics):
             q = 'Query: ' + query
         print(q)
     
-        p,r, _, prauc, fpr, tpr, _, predictions, auroc = predict_with_sbert(model_name, q,documents, hyperparam['top_k'], labels=labels, device=device, pr=True, binary_threshold=0.5)
+        p,r, _, prauc, fpr, tpr, _, predictions, auroc = predict_with_sbert(dir, q,documents, hyperparam['top_k'], labels=labels, device=device, pr=True, binary_threshold=0.5)
         
         plot_fpr.append(fpr)
         plot_tpr.append(tpr)

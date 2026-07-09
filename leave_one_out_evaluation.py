@@ -10,11 +10,11 @@ torch.cuda.manual_seed_all(seed)
 hyperparam={'top_k':None,
             'max_length':512,
             'data_path':'./data/',
-            'model_path':'<PATH_TO_TRAINED_MODELS>',
+            'model_path':os.getenv('MPRESS_LOO_MODEL_PATH', './model/'),
             'index_path':None,
             'criteria':True,
-            'fig_path':'<PATH_TO_SAVE_FIGURES>',
-            'prediction_path':'<PATH_TO_SAVE_PREDICTIONS>',
+            'fig_path':os.getenv('MPRESS_LOO_FIG_PATH', './model/figures/'),
+            'prediction_path':os.getenv('MPRESS_LOO_PREDICTION_PATH', './model/predictions/'),
             'test': True}
 
 train_file = 'train.csv'
