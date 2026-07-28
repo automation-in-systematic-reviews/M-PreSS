@@ -1,15 +1,16 @@
 from transformers import AutoTokenizer
 from tqdm import tqdm
 import numpy as np
+import os
 from utils import read_data_os
 
 tokenizer = AutoTokenizer.from_pretrained("bert-base-uncased")
 
-data_path = '/user/work/zx16649/dataset/open_source/'
+data_path = os.getenv('DATA_PATH', 'data/')
 train_file = 'train.csv'
 test_file = 'test.csv'
-train_query, train_corpus, train_label = read_data_os(data_path+train_file, label_key='label_included')
-test_query, test_corpus, train_label = read_data_os(data_path+train_file, label_key='label_included')
+train_query, train_corpus, train_label = read_data_os(os.path.join(data_path, train_file), label_key='label_included')
+test_query, test_corpus, train_label = read_data_os(os.path.join(data_path, train_file), label_key='label_included')
 
 texts = train_corpus + test_corpus
 

@@ -5,13 +5,14 @@ import glob
 from utils import evaluate_classification
 
 
-train_path = '/user/work/zx16649/study_screening_predictions/general_paper/os_train/'
-test_path = '/user/work/zx16649/study_screening_predictions/general_paper/os_test/'
+base_predictions_dir = os.getenv('PREDICTIONS_BASE_DIR', os.path.join('data', 'study_screening_predictions'))
+train_path = os.getenv('TRAIN_PATH', os.path.join(base_predictions_dir, 'os_train'))
+test_path = os.getenv('TEST_PATH', os.path.join(base_predictions_dir, 'os_test'))
 suffix = '*_inclusion_exclusion.csv'
 test_suffix = '*_inclusion_exclusion.csv'
-summary_path = '/user/work/zx16649/study_screening_predictions/general_paper/thresholds/summary_covid_3_25_03_24.csv'
-prediction_path = '/user/work/zx16649/study_screening_predictions/general_paper/thresholds/'
-model_path = '/user/work/zx16649/model_trained/os_covid_criteria/os_covid_3_include_exclude_criteria_25_01_16'
+summary_path = os.getenv('SUMMARY_PATH', os.path.join(base_predictions_dir, 'thresholds', 'summary.csv'))
+prediction_path = os.getenv('PREDICTION_PATH', os.path.join(base_predictions_dir, 'thresholds'))
+model_path = os.getenv('MODEL_COLUMN', 'similarity')
 os.makedirs(prediction_path, exist_ok=True)
 
 search_pattern = os.path.join(train_path, suffix)
@@ -118,7 +119,7 @@ for file in train_list:
     # difference = positive_npv - positive_p
     # filename = f"{incidence}_incidence_{difference}_to_review.csv"
     filename = f"{incidence}.csv"
-    test_df.to_csv(prediction_path+filename, index=False)
+    test_df.to_csv(os.path.join(prediction_path, filename), index=False)
 
     
 incidence = 'all'
